@@ -419,3 +419,375 @@ body {
         font-size: 15px;
     }
 }
+
+/* ========================= */
+/* Page Présentation */
+/* ========================= */
+
+.presentation-container {
+    min-height: calc(100vh - 75px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 45px 25px;
+}
+
+.presentation-card {
+    position: relative;
+    width: min(100%, 900px);
+    padding: 55px 40px 40px 40px;
+    border-radius: 28px;
+    background: rgba(255, 255, 255, 0.88);
+    border: 1px solid rgba(47, 128, 237, 0.16);
+    box-shadow: 0 18px 45px rgba(15, 76, 129, 0.14);
+    backdrop-filter: blur(4px);
+}
+
+/* Photo style "épinglée" */
+.presentation-photo-wrapper {
+    position: absolute;
+    top: -28px;
+    left: 35px;
+    transform: rotate(-6deg);
+}
+
+.presentation-pin {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 16px;
+    height: 16px;
+    background: #d94b4b;
+    border-radius: 50%;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+    z-index: 2;
+}
+
+.presentation-photo {
+    width: 150px;
+    height: 190px;
+    object-fit: cover;
+    background: white;
+    padding: 8px 8px 18px 8px;
+    border-radius: 6px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
+    display: block;
+}
+
+/* Texte */
+.presentation-content {
+    max-width: 720px;
+    margin: 70px auto 0 auto;
+}
+
+.presentation-content h2 {
+    font-size: 34px;
+    color: #0f4c81;
+    margin-bottom: 22px;
+    text-align: center;
+}
+
+.presentation-content p {
+    color: #334a62;
+    font-size: 18px;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    text-align: justify;
+}
+
+/* Responsive */
+@media screen and (max-width: 850px) {
+    .presentation-container {
+        min-height: calc(100vh - 85px);
+        padding: 28px 16px;
+        align-items: flex-start;
+    }
+
+    .presentation-card {
+        padding: 30px 20px 26px 20px;
+    }
+
+    .presentation-photo-wrapper {
+        position: relative;
+        top: 0;
+        left: 0;
+        transform: rotate(-4deg);
+        margin: 0 auto 20px auto;
+        width: fit-content;
+    }
+
+    .presentation-content {
+        max-width: 100%;
+        margin: 0;
+    }
+
+    .presentation-content h2 {
+        font-size: 28px;
+        text-align: center;
+    }
+
+    .presentation-content p {
+        font-size: 16px;
+        line-height: 1.7;
+        text-align: left;
+    }
+
+    .presentation-photo {
+        width: 130px;
+        height: 165px;
+    }
+}
+/* ========================= */
+/* Page Carrière */
+/* ========================= */
+
+.career-container {
+    min-height: calc(100vh - 75px);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 45px 25px;
+}
+
+.career-card {
+    width: min(100%, 980px);
+    padding: 40px;
+    border-radius: 28px;
+    background: rgba(255, 255, 255, 0.88);
+    border: 1px solid rgba(47, 128, 237, 0.16);
+    box-shadow: 0 18px 45px rgba(15, 76, 129, 0.14);
+    backdrop-filter: blur(4px);
+}
+
+.career-header {
+    text-align: center;
+    margin-bottom: 42px;
+}
+
+.career-header h2 {
+    font-size: 36px;
+    color: #0f4c81;
+    margin-bottom: 10px;
+}
+
+.career-header p {
+    max-width: 700px;
+    margin: 0 auto;
+    color: #5f6f82;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* Séparation Études / Expériences */
+.career-section {
+    margin-bottom: 50px;
+}
+
+.career-section:last-child {
+    margin-bottom: 0;
+}
+
+.career-section-title {
+    display: inline-block;
+    font-size: 25px;
+    color: #0f4c81;
+    margin-bottom: 24px;
+    padding: 10px 18px;
+    border-radius: 14px;
+    background: #f5faff;
+    border: 2px solid #d6eaff;
+    box-shadow: 0 8px 18px rgba(47, 128, 237, 0.12);
+}
+
+/* Frise chronologique */
+.timeline {
+    position: relative;
+    max-width: 820px;
+    margin: 0 auto;
+    padding-left: 35px;
+}
+
+/* Ligne verticale */
+.timeline::before {
+    content: "";
+    position: absolute;
+    left: 32px;
+    top: 8px;
+    bottom: 8px;
+    width: 3px;
+    border-radius: 10px;
+    background: linear-gradient(180deg, #2f80ed, #6bb6ff);
+}
+
+/* Élément de la frise */
+.timeline-item {
+    position: relative;
+    display: flex;
+    gap: 24px;
+    margin-bottom: 30px;
+}
+
+.timeline-item:last-child {
+    margin-bottom: 0;
+}
+
+/* Point de la frise */
+.timeline-dot {
+    position: relative;
+    z-index: 2;
+    flex: 0 0 64px;
+    width: 64px;
+    height: 64px;
+    background: #f5faff;
+    border: 3px solid #2f80ed;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 18px rgba(47, 128, 237, 0.22);
+    font-size: 26px;
+}
+
+/* Bloc texte */
+.timeline-content {
+    flex: 1;
+    background: #f5faff;
+    border: 2px solid #d6eaff;
+    border-radius: 18px;
+    padding: 22px 24px;
+    box-shadow: 0 8px 22px rgba(47, 128, 237, 0.12);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.timeline-content:hover {
+    transform: translateX(6px);
+    border-color: #2f80ed;
+    box-shadow: 0 12px 28px rgba(47, 128, 237, 0.2);
+}
+
+/* Différence visuelle études / professionnel */
+.timeline-content.professional {
+    border-left: 6px solid #2f80ed;
+}
+
+.timeline-content.studies {
+    border-left: 6px solid #0f4c81;
+}
+
+/* Date */
+.timeline-date {
+    display: inline-block;
+    color: #2f80ed;
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.timeline-content h3 {
+    color: #0f4c81;
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.timeline-content p {
+    color: #334a62;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* Listes */
+.timeline-list {
+    margin-top: 12px;
+    padding-left: 20px;
+    color: #334a62;
+}
+
+.timeline-list li {
+    margin-bottom: 8px;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.timeline-list li::marker {
+    color: #2f80ed;
+}
+
+/* Adaptation téléphone */
+@media screen and (max-width: 850px) {
+    .career-container {
+        min-height: calc(100vh - 85px);
+        padding: 28px 16px;
+    }
+
+    .career-card {
+        padding: 28px 18px;
+        border-radius: 22px;
+    }
+
+    .career-header {
+        margin-bottom: 32px;
+    }
+
+    .career-header h2 {
+        font-size: 30px;
+    }
+
+    .career-header p {
+        font-size: 15px;
+    }
+
+    .career-section {
+        margin-bottom: 38px;
+    }
+
+    .career-section-title {
+        font-size: 21px;
+        padding: 9px 14px;
+        margin-bottom: 22px;
+    }
+
+    .timeline {
+        padding-left: 0;
+    }
+
+    .timeline::before {
+        left: 25px;
+    }
+
+    .timeline-item {
+        gap: 16px;
+        margin-bottom: 26px;
+    }
+
+    .timeline-dot {
+        flex: 0 0 52px;
+        width: 52px;
+        height: 52px;
+        font-size: 22px;
+    }
+
+    .timeline-content {
+        padding: 18px 16px;
+    }
+
+    .timeline-content:hover {
+        transform: none;
+    }
+
+    .timeline-content h3 {
+        font-size: 19px;
+    }
+
+    .timeline-content p,
+    .timeline-list li {
+        font-size: 15px;
+        line-height: 1.55;
+    }
+
+    .timeline-date {
+        font-size: 12px;
+    }
+}
