@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Lucas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Bandeau du haut -->
+    <header class="top-bar">
+        <a href="index.html" class="home-button" title="Accueil">
+            <!-- Logo maison en SVG -->
+            <svg class="home-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+            </svg>
+            <span>Accueil</span>
+        </a>
+    </header>
+
+    <!-- Contenu principal -->
+    <main class="main-container">
+
+        <!-- Partie gauche : photo -->
+        <section class="profile-section">
+            <div class="photo-card">
+                <img src="images/moi.jpg" alt="Photo de Lucas">
+            </div>
+        </section>
+
+        <!-- Partie droite : boutons -->
+        <section class="menu-section">
+            <h1>Mon Portfolio</h1>
+            <p class="subtitle">Bienvenue sur mon espace personnel</p>
+
+            <nav class="menu-links">
+                <a href="presentation.html">Présentation</a>
+                <a href="carriere.html">Carrière</a>
+                <a href="cv.html">CV</a>
+                <a href="competence.html">Compétence</a>
+                <a href="loisirs.html">Loisirs</a>
+            </nav>
+        </section>
+
+    </main>
+
+</body>
+</html>
