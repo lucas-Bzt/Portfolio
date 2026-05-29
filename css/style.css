@@ -1,0 +1,421 @@
+/* Réglages généraux */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #ffffff;
+    color: #1f2d3d;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Formes décoratives bleues en arrière-plan */
+.shape {
+    position: fixed;
+    z-index: -1;
+    opacity: 0.22;
+    pointer-events: none;
+}
+
+.shape-1 {
+    width: 520px;
+    height: 520px;
+    background: #2f80ed;
+    top: 110px;
+    left: -230px;
+    transform: rotate(35deg);
+    clip-path: polygon(0 0, 100% 20%, 75% 100%, 0 75%);
+}
+
+.shape-2 {
+    width: 620px;
+    height: 320px;
+    background: #0f4c81;
+    right: -260px;
+    top: 170px;
+    transform: rotate(-28deg);
+    clip-path: polygon(0 20%, 100% 0, 80% 100%, 15% 85%);
+}
+
+.shape-3 {
+    width: 430px;
+    height: 430px;
+    background: #6bb6ff;
+    bottom: -180px;
+    left: 22%;
+    transform: rotate(45deg);
+    clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.shape-4 {
+    width: 720px;
+    height: 180px;
+    background: #d6eaff;
+    bottom: 80px;
+    right: -180px;
+    transform: rotate(-12deg);
+    border-radius: 100px;
+}
+
+/* Bandeau du haut */
+.top-bar {
+    width: 100%;
+    height: 75px;
+    background: linear-gradient(90deg, #0f4c81, #2f80ed);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 40px;
+    box-shadow: 0 3px 14px rgba(0, 0, 0, 0.18);
+    position: relative;
+}
+
+/* Titre du bandeau */
+.site-title {
+    color: white;
+    font-size: 26px;
+    letter-spacing: 0.5px;
+    font-weight: 700;
+}
+
+/* Bouton accueil */
+.home-button {
+    position: absolute;
+    left: 35px;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    padding: 10px 15px;
+    border-radius: 12px;
+    transition: background-color 0.25s ease, transform 0.25s ease;
+}
+
+.home-button:hover {
+    background-color: rgba(255, 255, 255, 0.18);
+    transform: translateY(-2px);
+}
+
+.home-icon {
+    width: 23px;
+    height: 23px;
+    fill: white;
+}
+
+/* Contenu principal */
+.main-container {
+    min-height: calc(100vh - 75px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 55px 25px;
+}
+
+/* Carte centrale */
+.content-card {
+    width: min(100%, 980px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 48px;
+    padding: 45px;
+    border-radius: 32px;
+    background: rgba(255, 255, 255, 0.82);
+    border: 1px solid rgba(47, 128, 237, 0.16);
+    box-shadow: 0 18px 45px rgba(15, 76, 129, 0.14);
+    backdrop-filter: blur(4px);
+}
+
+/* Partie gauche */
+.profile-section {
+    flex: 0 0 360px;
+    display: flex;
+    justify-content: center;
+}
+
+.photo-card {
+    width: 310px;
+    height: 405px;
+    border-radius: 26px;
+    overflow: hidden;
+    background-color: #eaf4ff;
+    box-shadow: 0 14px 32px rgba(47, 128, 237, 0.27);
+    border: 4px solid #d6eaff;
+}
+
+.photo-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Partie droite */
+.menu-section {
+    flex: 0 0 360px;
+}
+
+.menu-section h2 {
+    font-size: 42px;
+    color: #0f4c81;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    color: #5f6f82;
+    margin-bottom: 32px;
+    font-size: 17px;
+    line-height: 1.4;
+}
+
+/* Liens verticaux */
+.menu-links {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.menu-links a {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+    color: #0f4c81;
+    background-color: #f5faff;
+    border: 2px solid #d6eaff;
+    padding: 15px 20px;
+    border-radius: 14px;
+    font-size: 19px;
+    font-weight: 600;
+    transition: background-color 0.25s ease, color 0.25s ease, transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.menu-links a:hover {
+    background-color: #2f80ed;
+    color: white;
+    border-color: #2f80ed;
+    transform: translateX(7px);
+    box-shadow: 0 8px 20px rgba(47, 128, 237, 0.25);
+}
+
+.link-icon {
+    width: 28px;
+    font-size: 21px;
+    text-align: center;
+}
+
+/* Adaptation téléphone */
+@media screen and (max-width: 850px) {
+    .top-bar {
+        height: 85px;
+        padding: 0 20px;
+    }
+
+    .site-title {
+        font-size: 21px;
+    }
+
+    .home-button {
+        left: 15px;
+        padding: 8px 10px;
+    }
+
+    .home-button span {
+        display: none;
+    }
+
+    .main-container {
+        min-height: calc(100vh - 85px);
+        padding: 30px 18px;
+    }
+
+    .content-card {
+        flex-direction: column;
+        gap: 32px;
+        padding: 30px 22px;
+    }
+
+    .profile-section,
+    .menu-section {
+        flex: none;
+        width: 100%;
+    }
+
+    .photo-card {
+        width: 245px;
+        height: 320px;
+    }
+
+    .menu-section {
+        text-align: center;
+    }
+
+    .menu-section h2 {
+        font-size: 34px;
+    }
+
+    .menu-links a {
+        justify-content: flex-start;
+        font-size: 18px;
+    }
+
+    .menu-links a:hover {
+        transform: none;
+    }
+
+    .shape-1 {
+        width: 360px;
+        height: 360px;
+    }
+
+    .shape-2 {
+        width: 430px;
+        height: 250px;
+    }
+
+    .shape-3 {
+        width: 300px;
+        height: 300px;
+    }
+}
+
+/* ========================= */
+/* Page CV */
+/* ========================= */
+
+/* Groupe de boutons à droite du bandeau */
+.header-actions {
+    position: absolute;
+    right: 35px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Boutons du bandeau : Télécharger / Ouvrir */
+.header-button {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    padding: 10px 15px;
+    border-radius: 12px;
+    transition: background-color 0.25s ease, transform 0.25s ease;
+}
+
+.header-button:hover {
+    background-color: rgba(255, 255, 255, 0.18);
+    transform: translateY(-2px);
+}
+
+.download-icon {
+    font-size: 19px;
+}
+
+.download-button:hover {
+    background-color: rgba(255, 255, 255, 0.18);
+    transform: translateY(-2px);
+}
+
+.download-icon {
+    font-size: 19px;
+}
+
+/* Conteneur principal de la page CV */
+.cv-container {
+    min-height: calc(100vh - 75px);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 45px 25px;
+}
+
+/* Carte qui contient le CV */
+.cv-viewer-card {
+    width: min(100%, 900px);
+    padding: 35px;
+    border-radius: 28px;
+    background: rgba(255, 255, 255, 0.86);
+    border: 1px solid rgba(47, 128, 237, 0.16);
+    box-shadow: 0 18px 45px rgba(15, 76, 129, 0.14);
+    backdrop-filter: blur(4px);
+}
+
+.cv-viewer-card h2 {
+    font-size: 34px;
+    color: #0f4c81;
+    margin-bottom: 8px;
+}
+
+.cv-subtitle {
+    color: #5f6f82;
+    font-size: 16px;
+    margin-bottom: 25px;
+}
+
+/* Zone d'affichage de l'image du CV */
+.cv-image-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 2px solid #d6eaff;
+    background-color: #f5faff;
+    box-shadow: 0 10px 28px rgba(47, 128, 237, 0.18);
+}
+
+/* Image du CV */
+.cv-image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Adaptation téléphone pour la page CV */
+@media screen and (max-width: 850px) {
+    .header-actions {
+        right: 15px;
+        gap: 5px;
+    }
+
+    .header-button {
+        padding: 8px 9px;
+    }
+
+    .header-button span:last-child {
+        display: none;
+    }
+
+    .download-icon {
+        font-size: 18px;
+    }
+
+    .cv-container {
+        min-height: calc(100vh - 85px);
+        padding: 28px 16px;
+    }
+
+    .cv-viewer-card {
+        padding: 24px 18px;
+        border-radius: 22px;
+    }
+
+    .cv-viewer-card h2 {
+        font-size: 28px;
+        text-align: center;
+    }
+
+    .cv-subtitle {
+        text-align: center;
+        font-size: 15px;
+    }
+}
