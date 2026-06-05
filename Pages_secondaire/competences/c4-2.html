@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Exécuter la mise en service d’un système en respectant la procédure</title>
+
+  <style>
+    :root {
+      --primary: #163a5f;
+      --secondary: #1f5f8b;
+
+      /* Compétence verte */
+      --accent: #4caf50;
+      --accent-soft: #eaf7eb;
+
+      --text: #1f2937;
+      --muted: #6b7280;
+      --bg: #f5f8fc;
+      --white: #ffffff;
+      --shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    .page {
+      max-width: 1150px;
+      margin: 40px auto;
+      padding: 0 20px 60px;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 20px;
+      text-decoration: none;
+      color: var(--secondary);
+      font-weight: bold;
+      transition: 0.2s;
+    }
+
+    .back-link:hover {
+      opacity: 0.8;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 38px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -70px;
+      top: -70px;
+      width: 210px;
+      height: 210px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 50%;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 8px 15px;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      margin-bottom: 14px;
+    }
+
+    .hero h1 {
+      margin: 0 0 12px;
+      font-size: 2rem;
+      line-height: 1.25;
+    }
+
+    .hero p {
+      margin: 0;
+      font-size: 1.05rem;
+      max-width: 850px;
+      opacity: 0.96;
+    }
+
+    .intro-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 0.9fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .card h2 {
+      margin-top: 0;
+      color: var(--primary);
+      font-size: 1.3rem;
+      border-left: 5px solid var(--accent);
+      padding-left: 12px;
+    }
+
+    .card h3 {
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+
+    .full {
+      grid-column: 1 / -1;
+    }
+
+    .highlight-box,
+    .blue-box,
+    .warning-box,
+    .success-box {
+      background: var(--accent-soft);
+      border-left: 5px solid var(--accent);
+      padding: 16px 18px;
+      border-radius: 12px;
+      margin-top: 12px;
+    }
+
+    ul {
+      padding-left: 20px;
+      margin-bottom: 0;
+    }
+
+    .mini-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 15px;
+    }
+
+    .mini-item {
+      background: var(--accent-soft);
+      border: 1px solid #b9e4bc;
+      border-radius: 14px;
+      padding: 14px 16px;
+    }
+
+    .mini-item strong {
+      color: var(--primary);
+    }
+
+    .proof-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 16px;
+    }
+
+    .proof-grid.one-column {
+      grid-template-columns: 1fr;
+    }
+
+    .image-card {
+      padding: 0;
+      overflow: hidden;
+    }
+
+    figure {
+      margin: 0;
+      background: white;
+    }
+
+figure img {
+  display: block;
+  width: 100%;
+  max-width: 550px;
+  height: auto;
+  object-fit: contain;
+  margin: 0 auto;
+  background: #dfe8f1;
+}
+
+.image-card figure {
+  padding-top: 18px;
+}
+
+.proof-grid.one-column figure img {
+  max-width: 550px;
+}
+
+
+    figcaption {
+      padding: 14px 16px;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .pdf-preview {
+      background: var(--accent-soft);
+      border: 1px dashed #b9e4bc;
+      border-radius: 14px;
+      padding: 18px;
+      margin: 14px 0;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .pdf-preview img {
+      width: 100%;
+      max-height: 280px;
+      object-fit: contain;
+      border-radius: 12px;
+      background: white;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .tag {
+      background: var(--accent-soft);
+      color: #256b29;
+      border: 1px solid #b9e4bc;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+
+    .bilan {
+      background: linear-gradient(135deg, #ffffff, #f2fbf3);
+      border: 1px solid #b9e4bc;
+    }
+
+    .footer-note {
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 900px) {
+      .intro-grid,
+      .grid,
+      .proof-grid,
+      .proof-grid.one-column {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        font-size: 1.55rem;
+      }
+
+      .hero {
+        padding: 28px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <a href="../competence.html" class="back-link">← Retour aux compétences</a>
+
+    <section class="hero">
+      <div class="badge">Compétence</div>
+      <h1>Exécuter la mise en service d’un système en respectant la procédure</h1>
+      <p>
+        Lors de mon alternance chez IPO Technologie, j’interviens en production, au service qualité,
+        en tant que technicien test final. Mon rôle est de préparer, contrôler et valider des machines
+        avant leur livraison au client.
+      </p>
+    </section>
+
+    <section class="intro-grid">
+      <article class="card">
+        <h2>Contexte du poste</h2>
+        <p>
+          Dans le cadre de mon alternance chez IPO Technologie, je travaille en partie en production,
+          plus précisément au service qualité, en tant que technicien test final. Ce poste intervient
+          après la production des machines.
+        </p>
+
+        <p>
+          L’objectif est de vérifier que chaque produit fonctionne correctement, qu’il respecte les demandes
+          du client et qu’il peut être livré dans un état conforme.
+        </p>
+
+        <div class="highlight-box">
+          <strong>Objectif :</strong><br>
+          mettre en service les machines produites, appliquer les réglages nécessaires, vérifier leur bon
+          fonctionnement et s’assurer qu’elles respectent les exigences du client avant livraison.
+        </div>
+      </article>
+
+      <article class="card">
+        <h2>Procédure interne</h2>
+        <p>
+          La mise en service d’un panel-PC suit une procédure interne de test final. Cette procédure sert
+          de référence pour contrôler les machines neuves avant leur expédition.
+        </p>
+
+        <div class="pdf-preview">
+          <img src="../../documents/procedure-test-final-couverture.png" alt="Page de garde de la procédure de test final">
+          <p>Aperçu de la procédure interne de test final</p>
+        </div>
+      </article>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <h2>Vérification de la machine</h2>
+        <p>
+          Dans un premier temps, je vérifie que la machine correspond à la configuration demandée.
+          Cela peut concerner le type de produit, la carte CPU, la mémoire, le stockage, les options
+          présentes, comme le Wi-Fi, le Bluetooth ou la dalle tactile, ainsi que l’état général de la machine.
+        </p>
+
+        <div class="blue-box">
+          Si un dossier client existe, il doit être pris en compte, car certains clients demandent des
+          réglages ou des installations particulières.
+        </div>
+      </article>
+
+      <article class="card">
+        <h2>Mise en service logicielle</h2>
+        <p>
+          Ensuite, je réalise la mise en service logicielle de la machine. Selon la demande client,
+          j’installe ou je déploie le système d’exploitation souhaité, le plus souvent Windows 11 Pro
+          ou Windows IoT.
+        </p>
+
+        <p>
+          Une fois l’installation terminée, je prépare l’environnement utilisateur. Je crée une session
+          administrateur au nom de l’entreprise cliente, je supprime les comptes inutiles si nécessaire,
+          je renomme la machine dans Windows et j’active la licence du système d’exploitation.
+        </p>
+      </article>
+
+      <article class="card">
+        <h2>Contrôles logiciels et matériels</h2>
+        <p>
+          Je vérifie ensuite le bon fonctionnement des éléments logiciels et matériels. Cela comprend
+          notamment le Wi-Fi et le Bluetooth lorsque ces options sont demandées.
+        </p>
+
+        <p>
+          Si un périphérique n’est pas correctement reconnu ou ne fonctionne pas, j’installe les pilotes
+          nécessaires. Je vérifie également le gestionnaire de périphériques afin de m’assurer qu’il ne
+          présente pas d’erreur et que tous les éléments attendus sont bien détectés.
+        </p>
+      </article>
+
+      <article class="card">
+        <h2>Affichage, son et luminosité</h2>
+        <p>
+          Pour les panel-PC, je réalise aussi les vérifications liées à l’affichage et à l’interface utilisateur.
+          J’installe le logiciel interne “Lumière”, développé par IPO Technologie, qui permet de gérer
+          la luminosité de l’écran.
+        </p>
+
+        <p>
+          Je vérifie que la variation de luminosité fonctionne correctement. Je contrôle également le son,
+          aussi bien au niveau des haut-parleurs internes que de la prise jack lorsque celle-ci est présente.
+        </p>
+      </article>
+
+      <article class="card full">
+        <h2>Dalle tactile et paramètres complémentaires</h2>
+        <p>
+          Une partie importante de la mise en service concerne la dalle tactile. Selon le modèle de machine
+          produit, le firmware ou les paramètres de la dalle tactile peuvent être différents. Je dois donc
+          installer ou flasher le firmware adapté, puis vérifier que le tactile fonctionne correctement.
+        </p>
+
+        <p>
+          Toutes les machines nécessitent également des réglages complémentaires dans Windows ou dans le
+          gestionnaire de périphériques. Ces réglages peuvent concerner les pilotes, les périphériques réseau,
+          le Wake-on-LAN, les options d’alimentation ou certains paramètres spécifiques au client.
+        </p>
+
+        <div class="tags">
+          <span class="tag">Installation OS</span>
+          <span class="tag">Windows 11 Pro / IoT</span>
+          <span class="tag">Drivers</span>
+          <span class="tag">Wi-Fi / Bluetooth</span>
+          <span class="tag">Dalle tactile</span>
+          <span class="tag">Son</span>
+          <span class="tag">Luminosité</span>
+          <span class="tag">Wake-on-LAN</span>
+        </div>
+      </article>
+
+      <article class="card full">
+        <h2>Respect de la procédure et des dossiers client</h2>
+        <p>
+          Cette mission demande de respecter une démarche précise de mise en service, tout en étant capable
+          de s’adapter aux particularités de chaque machine et de chaque client. Les contrôles réalisés
+          permettent de détecter rapidement un problème de pilote, une option absente, une mauvaise
+          configuration ou un dysfonctionnement matériel ou logiciel.
+        </p>
+
+        <p>
+          Même si j’ai appris une grande partie du poste par la pratique et par l’accompagnement des techniciens,
+          je ne travaille pas uniquement de mémoire. Lorsque je ne connais pas une machine, lorsqu’une configuration
+          est spécifique ou lorsque j’ai un doute sur une opération à réaliser, je peux me référer au dossier client
+          ou à la procédure interne de test final.
+        </p>
+
+        <div class="highlight-box">
+          Ces documents me permettent de vérifier les réglages attendus, les options à contrôler, les exigences
+          particulières du client et les étapes à respecter afin de réaliser une mise en service conforme.
+        </div>
+      </article>
+
+      <article class="card full">
+        <h2>Preuves et illustrations</h2>
+        <p>
+          Pour illustrer cette compétence, je présente uniquement quelques extraits ciblés
+          de la procédure de test final utilisée en production. Je ne présente pas le document
+          complet, car il s’agit d’une procédure interne à l’entreprise. Les extraits choisis
+          permettent de montrer l’organisation de la mise en service, les contrôles réalisés
+          et la préparation logicielle de la machine.
+        </p>
+
+        <div class="proof-grid">
+          <article class="card image-card">
+            <figure>
+              <img src="../../documents/procedure-test-final-couverture.png" alt="Page de garde de la procédure de test final">
+              <figcaption>
+                <strong>Procédure interne :</strong> page de garde de la procédure de test final utilisée
+                pour les machines neuves en sortie de production.
+              </figcaption>
+            </figure>
+          </article>
+
+          <article class="card image-card">
+            <figure>
+              <img src="../../documents/procedure-test-final-sommaire.png" alt="Sommaire de la procédure de test final">
+              <figcaption>
+                <strong>Sommaire :</strong> organisation générale de la procédure avec les étapes de
+                vérification du produit, d’installation logicielle, de fermeture et d’exigences spécifiques.
+              </figcaption>
+            </figure>
+          </article>
+        </div>
+      </article>
+
+      <article class="card full">
+        <h2>Contrôles réalisés lors du test final</h2>
+
+        <p>
+          Lors du test final, plusieurs fonctions sont vérifiées afin de s’assurer que la machine
+          est prête à être livrée au client. Ces contrôles permettent de valider à la fois le bon
+          fonctionnement matériel, logiciel et les options demandées.
+        </p>
+
+        <div class="mini-list">
+          <div class="mini-item">
+            <strong>Gestionnaire de périphériques :</strong>
+            vérification de l’absence d’erreur, de point d’exclamation ou de périphérique non reconnu.
+          </div>
+
+          <div class="mini-item">
+            <strong>Wi-Fi / Bluetooth :</strong>
+            contrôle du fonctionnement des options demandées par le client et installation des pilotes si nécessaire.
+          </div>
+
+          <div class="mini-item">
+            <strong>Dalle tactile :</strong>
+            vérification du fonctionnement du tactile, de la calibration et de l’absence de décalage.
+          </div>
+
+          <div class="mini-item">
+            <strong>Son :</strong>
+            contrôle des haut-parleurs internes et de la prise jack lorsque celle-ci est présente.
+          </div>
+
+          <div class="mini-item">
+            <strong>Luminosité :</strong>
+            installation et test du logiciel interne “Lumière” permettant de régler la luminosité de l’écran.
+          </div>
+
+          <div class="mini-item">
+            <strong>USB / Ethernet / sorties vidéo :</strong>
+            vérification des connectiques principales selon la configuration de la machine.
+          </div>
+        </div>
+
+        <div class="proof-grid one-column">
+          <article class="card image-card">
+            <figure>
+              <img src="../../documents/procedure-tests-software-1.png" alt="Premier extrait du tableau de tests software">
+              <figcaption>
+                <strong>Extrait du tableau de tests :</strong> contrôle des drivers à installer selon
+                les options présentes, puis début des vérifications fonctionnelles après installation de l’OS.
+              </figcaption>
+            </figure>
+          </article>
+
+          <article class="card image-card">
+            <figure>
+              <img src="../../documents/procedure-tests-software-2.png" alt="Deuxième extrait du tableau de tests software">
+              <figcaption>
+                <strong>Suite du tableau de tests :</strong> vérification du tactile, du gestionnaire
+                de périphériques, du Wi-Fi, du bouton ATX, du son et du logiciel de luminosité.
+              </figcaption>
+            </figure>
+          </article>
+        </div>
+      </article>
+
+      <article class="card full">
+        <h2>Préparation logicielle avant livraison</h2>
+
+        <p>
+          Une fois l’OS installé, la machine doit être préparée pour le client. Cette étape comprend
+          notamment la création du compte client, l’installation des drivers, la préparation de l’image
+          système si nécessaire et la vérification des réglages avant livraison.
+        </p>
+
+        <div class="proof-grid one-column">
+          <article class="card image-card">
+            <figure>
+              <img src="../../documents/procedure-preparation-os.png" alt="Extrait de la procédure concernant la préparation de l’OS">
+              <figcaption>
+                <strong>Préparation de l’OS :</strong> création du compte client, installation des drivers,
+                préparation système et application des exigences nécessaires avant livraison.
+              </figcaption>
+            </figure>
+          </article>
+        </div>
+      </article>
+
+      <article class="card full">
+        <h2>Exigences spécifiques client</h2>
+        <p>
+          Certains clients ont des exigences particulières. Dans ce cas, le bureau d’études prépare un dossier client
+          indiquant les réglages ou modifications à appliquer. Ces exigences viennent s’ajouter à la procédure standard.
+        </p>
+
+        <div class="success-box">
+          En cas de doute ou de machine inconnue, je peux donc m’appuyer sur la procédure interne et sur le dossier
+          client pour travailler correctement.
+        </div>
+      </article>
+
+      <article class="card full bilan">
+        <h2>Bilan personnel</h2>
+        <p>
+          Ce travail illustre directement la compétence “Exécuter la mise en service d’un système en respectant
+          la procédure”, car il repose sur l’application d’une procédure qualité en production.
+        </p>
+
+        <p>
+          Je dois préparer la machine, installer le système demandé, appliquer les réglages nécessaires, vérifier
+          les fonctions principales, prendre en compte les exigences spécifiques du client et m’assurer que le produit
+          est conforme avant livraison.
+        </p>
+
+        <p>
+          Cette expérience m’a permis de gagner en autonomie, de mieux comprendre les étapes de validation d’un produit
+          industriel et de développer une méthode de travail rigoureuse, basée sur les procédures internes et les dossiers
+          techniques disponibles.
+        </p>
+      </article>
+    </section>
+
+    <p class="footer-note">
+      IPO Technologie – Alternance BUT GEII / Parcours ESE
+    </p>
+  </main>
+</body>
+</html>

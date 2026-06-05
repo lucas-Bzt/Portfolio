@@ -1,0 +1,576 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>C3 - Produire une procédure d’essai pour valider la conformité d’un système</title>
+
+  <style>
+    :root {
+      --primary: #163a5f;
+      --secondary: #1f5f8b;
+
+      /* C3 = jaune / orange */
+      --accent: #4caf50;
+      --accent-soft: #eaf7eb;
+
+      --blue-soft: #eaf7eb;
+      --warning-soft: #eaf7eb;
+      --success-soft: #eaf7eb;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --bg: #f5f8fc;
+      --white: #ffffff;
+      --shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    .page {
+      max-width: 1150px;
+      margin: 40px auto;
+      padding: 0 20px 60px;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 20px;
+      text-decoration: none;
+      color: var(--secondary);
+      font-weight: bold;
+      transition: 0.2s;
+    }
+
+    .back-link:hover {
+      opacity: 0.8;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 38px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -70px;
+      top: -70px;
+      width: 210px;
+      height: 210px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 50%;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 8px 15px;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      margin-bottom: 14px;
+    }
+
+    .hero h1 {
+      margin: 0 0 12px;
+      font-size: 2rem;
+      line-height: 1.25;
+    }
+
+    .hero p {
+      margin: 0;
+      font-size: 1.05rem;
+      max-width: 850px;
+      opacity: 0.96;
+    }
+
+    .intro-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 0.9fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .card h2 {
+      margin-top: 0;
+      color: var(--primary);
+      font-size: 1.3rem;
+      border-left: 5px solid var(--accent);
+      padding-left: 12px;
+    }
+
+    .card h3 {
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+
+    .full {
+      grid-column: 1 / -1;
+    }
+
+    .highlight-box {
+      background: var(--accent-soft);
+      border-left: 5px solid var(--accent);
+      padding: 16px 18px;
+      border-radius: 12px;
+      margin-top: 12px;
+    }
+
+    .blue-box {
+      background: var(--blue-soft);
+      border-left: 5px solid var(--accent);
+      padding: 16px 18px;
+      border-radius: 12px;
+      margin-top: 12px;
+    }
+
+    .warning-box {
+      background: var(--warning-soft);
+      border-left: 5px solid var(--accent);
+      padding: 16px 18px;
+      border-radius: 12px;
+      margin-top: 12px;
+    }
+
+    .success-box {
+      background: var(--success-soft);
+      border-left: 5px solid var(--accent);
+      padding: 16px 18px;
+      border-radius: 12px;
+      margin-top: 12px;
+    }
+
+    ul {
+      padding-left: 20px;
+      margin-bottom: 0;
+    }
+
+    .mini-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 15px;
+    }
+
+    .mini-item {
+      background: #f8fff8;
+      border: 1px solid #b9e4bc;
+      border-radius: 14px;
+      padding: 14px 16px;
+    }
+
+    .mini-item strong {
+      color: var(--primary);
+    }
+
+    .proof-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 16px;
+    }
+
+    .image-card {
+      padding: 0;
+      overflow: hidden;
+    }
+
+    figure {
+      margin: 0;
+      background: white;
+    }
+
+    figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  background: #dfe8f1;
+}
+
+    figcaption {
+      padding: 14px 16px;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .pdf-preview {
+      background: #f2fbf3;
+      border: 1px dashed #b9e4bc;
+      border-radius: 14px;
+      padding: 18px;
+      margin: 14px 0;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .pdf-preview img {
+      width: 100%;
+      max-height: 280px;
+      object-fit: contain;
+      border-radius: 12px;
+      background: white;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .tag {
+      background: var(--accent-soft);
+      color: #256b29;
+      border: 1px solid #b9e4bc;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+
+    .bilan {
+      background: linear-gradient(135deg, #ffffff, #f7fff8);
+      border: 1px solid #b9e4bc;
+    }
+
+    .footer-note {
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 900px) {
+      .intro-grid,
+      .grid,
+      .proof-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        font-size: 1.55rem;
+      }
+
+      .hero {
+        padding: 28px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <a href="../competence.html" class="back-link">← Retour aux compétences</a>
+
+    <section class="hero">
+      <div class="badge">Compétence C3</div>
+      <h1>Produire une procédure d’essai pour valider la conformité d’un système</h1>
+      <p>
+        Lors de mon alternance chez IPO Technologie, j’ai réalisé un plan de test destiné
+        à vérifier la conformité d’un prototype de carte électronique de gestion écran,
+        à partir d’un cahier des charges et de documents techniques.
+      </p>
+    </section>
+
+    <section class="intro-grid">
+      <article class="card">
+        <h2>Contexte du projet</h2>
+        <p>
+          Dans le cadre de mon alternance chez IPO Technologie, j’ai travaillé sur un projet client
+          soumis à des contraintes de confidentialité très strictes. Le projet concernait une carte
+          électronique de gestion écran, développée à partir d’un cahier des charges établi entre
+          le client et les ingénieurs de l’entreprise.
+        </p>
+
+        <p>
+          Cette carte avait pour rôle de gérer plusieurs fonctions accessibles ou visibles par
+          l’opérateur. Elle permettait notamment la gestion de l’allumage de l’écran, le réglage
+          de sa luminosité, son alimentation, l’allumage du panel-PC, la LED de mise sous tension,
+          la LED d’activité disque, ainsi que la génération d’une tension interne de 5 V.
+        </p>
+
+        <div class="highlight-box">
+          <strong>Objectif :</strong><br>
+          créer un plan de test permettant de vérifier que le prototype répondait bien aux fonctions
+          attendues dans le cahier des charges.
+        </div>
+      </article>
+
+      <article class="card">
+        <h2>Document de travail</h2>
+        <p>
+          Pour des raisons de confidentialité, seuls des extraits anonymisés du cahier des charges
+          et du plan de test sont présentés.
+        </p>
+
+        <div class="pdf-preview">
+          <img src="../../documents/sommaire-plan-test.png" alt="Sommaire du plan de test">
+          <p>Aperçu du sommaire du plan de test</p>
+        </div>
+      </article>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <h2>Ma mission</h2>
+        <p>
+          Mon rôle a consisté à créer un plan de test permettant de vérifier que le prototype répondait
+          bien aux fonctions attendues dans le cahier des charges. Pour cela, je me suis appuyé sur
+          le cahier des charges, le schéma électronique et l’implantation de la carte.
+        </p>
+
+        <p>
+          À partir de ces documents, j’ai identifié les différentes fonctions à contrôler, puis j’ai
+          construit une procédure d’essai claire et exploitable par toute personne amenée à réaliser
+          les essais.
+        </p>
+      </article>
+
+      <article class="card">
+        <h2>Matériel utilisé</h2>
+        <p>
+          Les essais ont été réalisés avec du matériel de mesure adapté afin de contrôler les tensions,
+          les continuités et les signaux nécessaires au bon fonctionnement de la carte.
+        </p>
+
+        <div class="mini-list">
+          <div class="mini-item">
+            <strong>Mesures électriques :</strong> multimètre, oscilloscope et alimentation de laboratoire.
+          </div>
+
+          <div class="mini-item">
+            <strong>Intégration :</strong> carte mère et écran réel afin de vérifier le comportement dans
+            un environnement proche de l’utilisation finale.
+          </div>
+        </div>
+      </article>
+
+      <article class="card full">
+        <h2>Organisation du plan de test</h2>
+        <p>
+          Le plan de test a été organisé par grands chapitres afin de faciliter son utilisation.
+          Chaque partie correspond à une fonction ou à un ensemble fonctionnel de la carte :
+          gestion de l’écran, gestion des boutons et LED du panel-PC, génération du 5 V interne,
+          reset, mesures thermiques et intégration.
+        </p>
+
+        <p>
+          Cette organisation permet à l’opérateur de retrouver rapidement le test à effectuer et
+          de comprendre à quelle fonction de la carte il correspond.
+        </p>
+
+        <div class="tags">
+          <span class="tag">Gestion écran</span>
+          <span class="tag">Boutons</span>
+          <span class="tag">LED</span>
+          <span class="tag">5 V interne</span>
+          <span class="tag">Reset</span>
+          <span class="tag">Thermique</span>
+          <span class="tag">Intégration</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <h2>Structure des essais</h2>
+        <p>
+          Chaque sous-test a été rédigé de manière structurée. Pour chaque essai, j’ai indiqué les
+          conditions de test, le matériel ou les points de mesure à utiliser, les critères d’acceptation,
+          le résultat obtenu et une zone d’observation.
+        </p>
+
+        <div class="blue-box">
+          Cette présentation permet à l’opérateur de savoir précisément dans quel état doit se trouver
+          la carte, quelle action réaliser, quelle grandeur mesurer et quel résultat est attendu.
+        </div>
+      </article>
+
+      <article class="card">
+        <h2>Saisie des résultats</h2>
+        <p>
+          Le plan de test a également été conçu pour servir de support de saisie pendant les essais.
+          L’opérateur peut renseigner le résultat obtenu, noter une valeur mesurée, ajouter une remarque
+          ou associer une capture d’oscilloscope si nécessaire.
+        </p>
+
+        <div class="success-box">
+          Le but était de rendre les essais reproductibles, compréhensibles et faciles à vérifier
+          après réalisation.
+        </div>
+      </article>
+
+      <article class="card full">
+        <h2>Exemple 1 : gestion du bouton on/off du panel-PC</h2>
+        <p>
+          Un exemple concerne la gestion du bouton on/off du panel-PC. À partir de l’exigence du cahier
+          des charges, j’ai défini un test permettant de vérifier la continuité entre les connecteurs
+          concernés. Le plan de test précise les conditions à respecter, les points de mesure, le critère
+          d’acceptation attendu et le résultat obtenu.
+        </p>
+
+        <div class="proof-grid">
+          <article class="card image-card">
+            <figure>
+              <img src="../../documents/cdc-bp-on-off-panelpc.png" alt="Extrait du cahier des charges concernant le bouton on/off panel-PC">
+              <figcaption>
+                <strong>Extrait du cahier des charges :</strong> fonction attendue pour la gestion
+                du bouton on/off du panel-PC.
+              </figcaption>
+            </figure>
+          </article>
+
+          <article class="card image-card">
+            <figure>
+              <img src="../../documents/test-2010-bp-on-off-panelpc.png" alt="Extrait du plan de test 2010 bouton on/off panel-PC">
+              <figcaption>
+                <strong>Extrait du plan de test :</strong> vérification de la continuité entre les
+                points concernés, avec conditions de test, critères d’acceptation, résultat et observation.
+              </figcaption>
+            </figure>
+          </article>
+        </div>
+      </article>
+
+      <article class="card full">
+        <h2>Exemple 2 : gestion on/off de l’écran</h2>
+        <p>
+          Certains tests ont été conçus pour être réalisés indépendamment les uns des autres. Lorsque
+          ce n’était pas possible, notamment pour les tests séquentiels, l’ordre de réalisation a été
+          clairement indiqué.
+        </p>
+
+        <p>
+          Par exemple, pour la gestion on/off de l’écran, le comportement dépend de l’état précédent
+          du système. Le test a donc été présenté comme une séquence à suivre dans l’ordre afin de
+          vérifier correctement le passage d’un mode à l’autre.
+        </p>
+
+        <div class="proof-grid">
+          <article class="card image-card">
+            <figure>
+              <img src="../../documents/cdc-on-off-ecran.png" alt="Extrait du cahier des charges concernant la gestion on/off de l’écran">
+              <figcaption>
+                <strong>Extrait du cahier des charges :</strong> description des différents modes
+                de fonctionnement de la gestion on/off de l’écran.
+              </figcaption>
+            </figure>
+          </article>
+
+          <article class="card image-card">
+            <figure>
+              <img src="../../documents/test-1020-on-off-ecran.png" alt="Extrait du plan de test 1020 gestion on/off écran">
+              <figcaption>
+                <strong>Extrait du plan de test :</strong> exemple de test séquentiel à réaliser
+                dans l’ordre pour valider le comportement attendu.
+              </figcaption>
+            </figure>
+          </article>
+        </div>
+      </article>
+
+      <article class="card full">
+        <h2>Détection d’une non-conformité</h2>
+        <p>
+          Le plan de test a également été utilisé après intégration de la carte dans le système complet.
+          Cette phase a permis de vérifier le comportement du prototype dans des conditions plus proches
+          de l’utilisation réelle.
+        </p>
+
+        <p>
+          Lors d’un test d’alimentation après intégration, la procédure a permis de mettre en évidence
+          une anomalie : l’écran ne s’allumait pas correctement et une tension mesurée n’était pas conforme
+          à la valeur attendue. Cette non-conformité a été documentée dans le plan de test, avec un résultat
+          KO et une observation associée.
+        </p>
+
+        <div class="warning-box">
+          Après analyse, un composant a été retiré afin de corriger le problème. Le même plan de test
+          a ensuite permis de vérifier le bon fonctionnement de la carte après correction.
+        </div>
+
+        <div class="proof-grid">
+          <article class="card image-card">
+            <figure>
+              <img src="../../documents/integration-ko-r18.png" alt="Extrait du plan de test montrant une non-conformité après intégration">
+              <figcaption>
+                <strong>Extrait après intégration :</strong> le plan de test a permis de détecter
+                une anomalie sur le prototype, puis de valider la correction après modification.
+              </figcaption>
+            </figure>
+          </article>
+
+          <article class="card">
+            <h3>Intérêt du test d’intégration</h3>
+            <p>
+              Cette étape montre que la procédure ne servait pas seulement à contrôler des fonctions
+              séparées, mais aussi à vérifier le comportement de la carte dans son environnement réel.
+            </p>
+
+            <div class="highlight-box">
+              Le plan de test a donc permis de passer d’une vérification théorique des fonctions
+              à une validation concrète du prototype intégré.
+            </div>
+          </article>
+        </div>
+      </article>
+
+      <article class="card full bilan">
+        <h2>Bilan personnel</h2>
+        <p>
+          Ce travail m’a permis de produire une procédure d’essai complète, rigoureuse et ordonnée,
+          destinée à valider la conformité d’un système électronique. J’ai dû comprendre les fonctions
+          attendues, analyser les documents techniques disponibles, définir les essais nécessaires,
+          rédiger des critères d’acceptation mesurables et prévoir un support de saisie des résultats.
+        </p>
+
+        <p>
+          La procédure obtenue permet de réaliser les essais de manière reproductible, de noter les
+          résultats obtenus et de détecter d’éventuelles non-conformités.
+        </p>
+
+        <p>
+          Cette mission illustre directement la compétence “Produire une procédure d’essai pour valider
+          la conformité d’un système”, car elle repose sur la transformation d’exigences techniques en
+          tests concrets, organisés et exploitables pour contrôler la conformité d’une carte électronique
+          par rapport au cahier des charges.
+        </p>
+      </article>
+    </section>
+
+    <p class="footer-note">
+      IPO Technologie – Alternance BUT GEII / Parcours ESE
+    </p>
+  </main>
+</body>
+</html>

@@ -1,0 +1,565 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Procédure d'installation et de mise en service</title>
+
+  <style>
+    :root {
+  --primary: #163a5f;
+  --secondary: #1f5f8b;
+
+  /* C4 = gris */
+  --accent: #7b7f87;
+  --accent-soft: #f1f2f4;
+
+  --blue-soft: #eef6ff;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --bg: #f5f8fc;
+  --white: #ffffff;
+  --shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+  --radius: 18px;
+}
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    .page {
+      max-width: 1150px;
+      margin: 40px auto;
+      padding: 0 20px 60px;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 20px;
+      text-decoration: none;
+      color: var(--secondary);
+      font-weight: bold;
+      transition: 0.2s;
+    }
+
+    .back-link:hover {
+      opacity: 0.8;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 38px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -70px;
+      top: -70px;
+      width: 210px;
+      height: 210px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 50%;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 8px 15px;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      margin-bottom: 14px;
+    }
+
+    .hero h1 {
+      margin: 0 0 12px;
+      font-size: 2rem;
+      line-height: 1.25;
+    }
+
+    .hero p {
+      margin: 0;
+      font-size: 1.05rem;
+      max-width: 850px;
+      opacity: 0.96;
+    }
+
+    .intro-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 0.8fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .card h2 {
+      margin-top: 0;
+      color: var(--primary);
+      font-size: 1.3rem;
+      border-left: 5px solid var(--accent);
+      padding-left: 12px;
+    }
+
+    .card h3 {
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+
+    .full {
+      grid-column: 1 / -1;
+    }
+
+    .highlight-box {
+      background: var(--accent-soft);
+      border-left: 5px solid var(--accent);
+      padding: 16px 18px;
+      border-radius: 12px;
+      margin-top: 12px;
+    }
+
+    .blue-box {
+      background: var(--blue-soft);
+      border-left: 5px solid var(--secondary);
+      padding: 16px 18px;
+      border-radius: 12px;
+      margin-top: 12px;
+    }
+
+    ul {
+      padding-left: 20px;
+      margin-bottom: 0;
+    }
+
+    .mini-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 15px;
+    }
+
+    .mini-item {
+      background: #f8fbff;
+      border: 1px solid #dbe9f8;
+      border-radius: 14px;
+      padding: 14px 16px;
+    }
+
+    .mini-item strong {
+      color: var(--primary);
+    }
+
+    .proof-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 16px;
+    }
+
+    .download-card {
+      background: linear-gradient(135deg, #ffffff, #f7fbff);
+      border: 1px solid #dbe9f8;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .pdf-preview {
+      background: #eef3f8;
+      border: 1px dashed #b6c7d8;
+      border-radius: 14px;
+      padding: 18px;
+      margin: 14px 0;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .pdf-preview img {
+      width: 100%;
+      max-height: 280px;
+      object-fit: contain;
+      border-radius: 12px;
+      background: white;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    }
+
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      background: var(--primary);
+      color: white;
+      padding: 12px 18px;
+      border-radius: 12px;
+      font-weight: bold;
+      transition: 0.2s;
+      text-align: center;
+    }
+
+    .btn:hover {
+      background: var(--secondary);
+      transform: translateY(-1px);
+    }
+
+    .btn.secondary {
+      background: var(--accent);
+    }
+
+    .btn.secondary:hover {
+      background: #3f9443;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .tag {
+  background: var(--accent-soft);
+  color: #4b5563;
+  border: 1px solid #d1d5db;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+    .image-card {
+      padding: 0;
+      overflow: hidden;
+    }
+
+    figure {
+      margin: 0;
+      background: white;
+    }
+
+    figure img {
+      display: block;
+      width: 100%;
+      min-height: 260px;
+      object-fit: cover;
+      background: #dfe8f1;
+    }
+
+    figcaption {
+      padding: 14px 16px;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .bilan {
+      background: linear-gradient(135deg, #eef6ff, #f7fbff);
+      border: 1px solid #dbe9f8;
+    }
+
+    .footer-note {
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 900px) {
+      .intro-grid,
+      .grid,
+      .proof-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        font-size: 1.55rem;
+      }
+
+      .hero {
+        padding: 28px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <a href="../competence.html" class="back-link">← Retour aux compétences</a>
+
+    <section class="hero">
+      <div class="badge">Compétence</div>
+      <h1>Produire une procédure d’installation et de mise en service d’un système</h1>
+      <p>
+        Lors de mon alternance chez IPO Technologie, j’ai rédigé deux guides permettant
+        d’utiliser un panel-PC grand format comme écran de projection, malgré l’absence
+        d’entrée HDMI sur ce type d’équipement.
+      </p>
+    </section>
+
+    <section class="intro-grid">
+      <article class="card">
+        <h2>Contexte de la demande</h2>
+        <p>
+          Un client souhaitait utiliser un panel-PC grand format comme écran de présentation.
+          L’objectif était de pouvoir brancher un ordinateur portable afin d’afficher son contenu
+          sur le panel-PC, comme on le ferait avec un écran secondaire classique.
+        </p>
+
+        <p>
+          Cependant, un panel-PC n’est pas un simple moniteur. Il s’agit d’un ordinateur complet,
+          qui possède généralement des sorties vidéo, comme une sortie HDMI, mais pas d’entrée HDMI.
+          Il n’était donc pas possible de connecter directement un ordinateur portable dessus.
+        </p>
+
+        <div class="highlight-box">
+          <strong>Objectif :</strong><br>
+          trouver une solution simple permettant au client d’afficher l’écran d’un ordinateur
+          portable sur un panel-PC, puis produire une procédure claire pour son utilisation.
+        </div>
+      </article>
+
+      <article class="card download-card">
+        <div>
+          <h2>Documents associés</h2>
+          <p>
+            Deux guides ont été réalisés : un guide pour la solution logicielle Miracast et un guide
+            pour la solution matérielle avec boîtier de capture vidéo.
+          </p>
+
+          <div class="pdf-preview">
+            <img src="../../documents/miracast-couverture.jpg" alt="Aperçu du guide Miracast">
+            <p>Aperçu de la page de garde du guide Miracast</p>
+          </div>
+        </div>
+
+        <a class="btn" href="../../documents/GuideProjectionEcran-V4.pdf" target="_blank">
+          Ouvrir le guide Miracast
+        </a>
+      </article>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <h2>Analyse du problème</h2>
+        <p>
+          La difficulté principale venait du fait que le panel-PC ne pouvait pas recevoir directement
+          un signal HDMI provenant d’un autre ordinateur. Il fallait donc trouver un autre moyen
+          de récupérer ou d’afficher l’image du PC portable.
+        </p>
+
+        <div class="blue-box">
+          <strong>Contrainte technique :</strong><br>
+          absence d’entrée HDMI sur le panel-PC, ce qui empêche une utilisation directe comme écran.
+        </div>
+      </article>
+
+      <article class="card">
+        <h2>Solutions étudiées</h2>
+        <div class="mini-list">
+          <div class="mini-item">
+            <strong>Miracast :</strong> solution logicielle de projection sans fil intégrée à Windows,
+            dépendante de plusieurs prérequis matériels et logiciels.
+          </div>
+
+          <div class="mini-item">
+            <strong>Boîtier de capture HDMI vers USB :</strong> solution matérielle permettant de récupérer
+            le flux vidéo du PC portable sur le panel-PC via USB.
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <h2>Solution Miracast</h2>
+        <p>
+          J’ai d’abord étudié une solution logicielle basée sur Miracast. Cette technologie permet de
+          projeter l’écran d’un ordinateur vers un autre appareil compatible, sans câble vidéo.
+        </p>
+
+        <p>
+          Cette solution présente l’avantage de ne pas nécessiter de matériel supplémentaire. En revanche,
+          son fonctionnement dépend de plusieurs prérequis, notamment la version de Windows, la présence
+          du Wi-Fi, la compatibilité Wi-Fi Direct, le pilote graphique et la prise en charge de Miracast
+          par le matériel.
+        </p>
+
+        <div class="blue-box">
+          Le guide Miracast présente les prérequis, la pré-installation, l’utilisation, la déconnexion
+          et les tests de compatibilité à effectuer.
+        </div>
+      </article>
+
+      <article class="card">
+        <h2>Solution boîtier de capture</h2>
+        <p>
+          Afin de proposer une alternative lorsque Miracast n’est pas compatible, j’ai également étudié
+          une solution matérielle utilisant un boîtier de capture vidéo HDMI vers USB.
+        </p>
+
+        <p>
+          Le PC portable est connecté au boîtier par HDMI, puis le boîtier est connecté au panel-PC en USB.
+          Le panel-PC récupère alors le flux vidéo comme une source de capture, affichée avec un logiciel.
+        </p>
+
+        <div class="blue-box">
+          J’ai d’abord réalisé des essais avec VLC, mais l’image n’était pas assez fluide.
+          J’ai donc retenu OBS Studio, qui offrait un affichage plus adapté.
+        </div>
+      </article>
+
+      <article class="card full">
+        <h2>Travail réalisé</h2>
+        <p>
+          Après avoir testé les deux solutions, j’ai rédigé deux guides d’utilisation complets :
+          un guide pour la projection via Miracast et un guide pour la projection via boîtier de capture vidéo.
+          Ces documents ont été pensés pour être utilisables directement par le client ou par un utilisateur
+          non spécialiste.
+        </p>
+
+        <p>
+          J’ai détaillé chaque étape de manière progressive, avec des captures d’écran pour Windows 10
+          et Windows 11 lorsque cela était nécessaire. Les zones importantes sont entourées sur les captures,
+          puis expliquées à l’écrit afin de limiter les risques d’erreur pendant l’installation ou l’utilisation.
+        </p>
+
+        <p>
+          Les guides présentent les informations nécessaires à la mise en service : principe de fonctionnement,
+          prérequis, initialisation, utilisation quotidienne et moyens de déconnexion. Pour Miracast, j’ai ajouté
+          une partie permettant de tester la compatibilité du matériel à l’aide de commandes Windows et de l’outil
+          DxDiag. Pour le boîtier de capture, j’ai détaillé le branchement HDMI/USB, la configuration dans OBS Studio
+          et la méthode permettant d’afficher correctement le flux vidéo sur le panel-PC.
+        </p>
+
+        <div class="tags">
+          <span class="tag">Analyse du besoin</span>
+          <span class="tag">Mise en service</span>
+          <span class="tag">Guide utilisateur</span>
+          <span class="tag">Windows 10 / 11</span>
+          <span class="tag">OBS Studio</span>
+          <span class="tag">Miracast</span>
+        </div>
+      </article>
+
+      <article class="card full">
+        <h2>Preuves et illustrations</h2>
+        <p>
+          Pour illustrer cette compétence, je présente les deux guides réalisés ainsi que des extraits
+          montrant les prérequis, les étapes de configuration et les points de vigilance.
+        </p>
+
+        <div class="proof-grid">
+          <article class="card image-card">
+            <figure>
+              <img src="../../documents/miracast-prerequis.jpg" alt="Extrait du guide Miracast présentant les prérequis">
+              <figcaption>
+                <strong>Guide Miracast :</strong> extrait présentant les prérequis et les conditions de compatibilité
+                nécessaires pour utiliser la projection sans fil.
+              </figcaption>
+            </figure>
+          </article>
+
+          <article class="card image-card">
+            <figure>
+              <img src="../../documents/capture-obs.jpg" alt="Extrait du guide boîtier de capture montrant OBS Studio">
+              <figcaption>
+                <strong>Guide boîtier de capture :</strong> extrait présentant la configuration du périphérique
+                vidéo dans OBS Studio.
+              </figcaption>
+            </figure>
+          </article>
+        </div>
+      </article>
+
+      <article class="card full">
+        <h2>Documents téléchargeables</h2>
+        <p>
+          Les documents ci-dessous constituent les preuves principales de cette compétence. Ils montrent
+          la formalisation des solutions retenues sous forme de procédures claires, structurées et exploitables.
+        </p>
+
+        <div class="proof-grid">
+          <article class="card download-card">
+            <div>
+              <h3>Guide de projection via Miracast</h3>
+              <p>
+                Guide présentant la solution logicielle, les prérequis, la pré-installation, l’utilisation,
+                la déconnexion et les tests de compatibilité.
+              </p>
+
+              <div class="pdf-preview">
+                <img src="../../documents/miracast-couverture.jpg" alt="Page de garde du guide Miracast">
+                <p>Page de garde du guide Miracast</p>
+              </div>
+            </div>
+
+            <a class="btn" href="../../documents/GuideProjectionEcran-V4.pdf" target="_blank">
+              Ouvrir le document
+            </a>
+          </article>
+
+          <article class="card download-card">
+            <div>
+              <h3>Guide via boîtier de capture vidéo</h3>
+              <p>
+                Guide présentant la solution matérielle HDMI vers USB, le branchement du boîtier,
+                l’initialisation dans OBS Studio et l’utilisation courante.
+              </p>
+
+              <div class="pdf-preview">
+                <img src="../../documents/capture-couverture.jpg" alt="Page de garde du guide boîtier de capture vidéo">
+                <p>Page de garde du guide boîtier de capture vidéo</p>
+              </div>
+            </div>
+
+            <a class="btn secondary" href="../../documents/GuideProjectionEcran-OutilDeCapture-V4.pdf" target="_blank">
+              Ouvrir le document
+            </a>
+          </article>
+        </div>
+      </article>
+
+      <article class="card full bilan">
+        <h2>Bilan personnel</h2>
+        <p>
+          Ce travail m’a permis de produire une procédure d’installation et de mise en service à partir
+          d’un besoin client concret. J’ai dû analyser la contrainte technique du panel-PC, rechercher plusieurs
+          solutions possibles, tester leur fonctionnement, identifier leurs limites, puis formaliser leur utilisation
+          dans des documents clairs et structurés.
+        </p>
+
+        <p>
+          Les guides réalisés permettent à l’utilisateur de mettre en place la solution de manière autonome,
+          sans intervention directe de ma part. Cette mission illustre donc directement la compétence :
+          produire une procédure d’installation et de mise en service d’un système.
+        </p>
+      </article>
+    </section>
+
+    <p class="footer-note">
+      IPO Technologie – Alternance BUT GEII / Parcours ESE
+    </p>
+  </main>
+</body>
+</html>
