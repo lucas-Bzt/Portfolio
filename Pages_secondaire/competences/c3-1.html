@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Produire une procédure de maintenance</title>
+
+  <style>
+    :root {
+      --primary: #163a5f;
+      --secondary: #1f5f8b;
+
+      /* C3 = jaune */
+      --accent: #f2c94c;
+      --accent-soft: #fff8df;
+
+      --warning-soft: #fff1d6;
+      --blue-soft: #eef6ff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --bg: #f5f8fc;
+      --white: #ffffff;
+      --shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    .page {
+      max-width: 1150px;
+      margin: 40px auto;
+      padding: 0 20px 60px;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 20px;
+      text-decoration: none;
+      color: var(--secondary);
+      font-weight: bold;
+      transition: 0.2s;
+    }
+
+    .back-link:hover {
+      opacity: 0.8;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 38px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -70px;
+      top: -70px;
+      width: 210px;
+      height: 210px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 50%;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 8px 15px;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      margin-bottom: 14px;
+    }
+
+    .hero h1 {
+      margin: 0 0 12px;
+      font-size: 2rem;
+      line-height: 1.25;
+    }
+
+    .hero p {
+      margin: 0;
+      font-size: 1.05rem;
+      max-width: 850px;
+      opacity: 0.96;
+    }
+
+    .intro-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 0.8fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .card h2 {
+      margin-top: 0;
+      color: var(--primary);
+      font-size: 1.3rem;
+      border-left: 5px solid var(--accent);
+      padding-left: 12px;
+    }
+
+    .card h3 {
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+
+    .full {
+      grid-column: 1 / -1;
+    }
+
+    .highlight-box {
+      background: var(--accent-soft);
+      border-left: 5px solid var(--accent);
+      padding: 16px 18px;
+      border-radius: 12px;
+      margin-top: 12px;
+    }
+
+    .blue-box {
+      background: var(--blue-soft);
+      border-left: 5px solid var(--secondary);
+      padding: 16px 18px;
+      border-radius: 12px;
+      margin-top: 12px;
+    }
+
+    .warning-box {
+      background: var(--warning-soft);
+      border-left: 5px solid #e0a800;
+      padding: 16px 18px;
+      border-radius: 12px;
+      margin-top: 12px;
+    }
+
+    ul {
+      padding-left: 20px;
+      margin-bottom: 0;
+    }
+
+    .mini-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 15px;
+    }
+
+    .mini-item {
+      background: #f8fbff;
+      border: 1px solid #dbe9f8;
+      border-radius: 14px;
+      padding: 14px 16px;
+    }
+
+    .mini-item strong {
+      color: var(--primary);
+    }
+
+    .proof-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 16px;
+    }
+
+    .download-card {
+      background: linear-gradient(135deg, #ffffff, #f7fbff);
+      border: 1px solid #dbe9f8;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .pdf-preview {
+      background: #eef3f8;
+      border: 1px dashed #b6c7d8;
+      border-radius: 14px;
+      padding: 18px;
+      margin: 14px 0;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .pdf-preview img {
+      width: 100%;
+      max-height: 280px;
+      object-fit: contain;
+      border-radius: 12px;
+      background: white;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    }
+
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      background: var(--primary);
+      color: white;
+      padding: 12px 18px;
+      border-radius: 12px;
+      font-weight: bold;
+      transition: 0.2s;
+      text-align: center;
+    }
+
+    .btn:hover {
+      background: var(--secondary);
+      transform: translateY(-1px);
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .tag {
+      background: var(--accent-soft);
+      color: #8a6a00;
+      border: 1px solid #f5dc8c;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+
+    .image-card {
+      padding: 0;
+      overflow: hidden;
+    }
+
+    figure {
+      margin: 0;
+      background: white;
+    }
+
+    figure img {
+      display: block;
+      width: 100%;
+      min-height: 260px;
+      object-fit: cover;
+      background: #dfe8f1;
+    }
+
+    figcaption {
+      padding: 14px 16px;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .bilan {
+      background: linear-gradient(135deg, #fff, #fffaf0);
+      border: 1px solid #f5dc8c;
+    }
+
+    .footer-note {
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    /* Images plus petites pour les preuves de la compétence C3.4 */
+.proof-grid figure img {
+  width: 75%;
+  max-height: 220px;
+  min-height: auto;
+  object-fit: contain;
+  margin: 18px auto 0;
+  border-radius: 12px;
+  background: #f3f6fa;
+}
+
+    @media (max-width: 900px) {
+      .intro-grid,
+      .grid,
+      .proof-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        font-size: 1.55rem;
+      }
+
+      .hero {
+        padding: 28px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <a href="../competence.html" class="back-link">← Retour aux compétences</a>
+
+    <section class="hero">
+      <div class="badge">Compétence maintenance</div>
+      <h1>Produire une procédure de maintenance</h1>
+      <p>
+        Lors de mon stage chez ATEC Électronique, j’ai participé au maintien en état de
+        fonctionnement d’une ferme d’imprimantes 3D utilisée pour produire des pièces
+        nécessaires aux projets internes de l’entreprise.
+      </p>
+    </section>
+
+    <section class="intro-grid">
+      <article class="card">
+        <h2>Contexte de la mission</h2>
+        <p>
+          ATEC Électronique dispose d’une ferme d’imprimantes 3D composée de plusieurs
+          machines utilisées pour fabriquer des pièces de prototypes, des éléments de machines
+          internes et des feeders destinés à une machine Pick and Place.
+        </p>
+
+        <p>
+          Durant mon stage, j’étais chargé de lancer des impressions, de surveiller leur bon
+          déroulement et d’intervenir lorsque certaines imprimantes présentaient des défauts
+          ou tombaient en panne.
+        </p>
+
+        <div class="highlight-box">
+          <strong>Objectif :</strong><br>
+          remettre rapidement les imprimantes en état de marche afin de limiter les arrêts
+          et permettre la continuité de la production de pièces imprimées en 3D.
+        </div>
+      </article>
+
+      <article class="card download-card">
+        <div>
+          <h2>Document associé</h2>
+          <p>
+            La compétence est justifiée par mon rapport de stage, dans lequel une partie est
+            consacrée à la maintenance des imprimantes 3D et aux interventions réalisées.
+          </p>
+
+          <div class="pdf-preview">
+            <img src="../../documents/rapport-stage-atec-couverture.png" alt="Aperçu du rapport de stage ATEC Électronique">
+            <p>Aperçu du rapport de stage</p>
+          </div>
+        </div>
+
+        <a class="btn" href="../../documents/Rapport-de-stage-ATEC.pdf" target="_blank">
+          Ouvrir le rapport de stage
+        </a>
+      </article>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <h2>Problèmes rencontrés</h2>
+        <p>
+          Certaines impressions pouvaient échouer et provoquer une immobilisation de la machine.
+          Deux cas revenaient principalement pendant mon stage.
+        </p>
+
+        <div class="mini-list">
+          <div class="mini-item">
+            <strong>Blob autour de la buse :</strong> amas de plastique causé par un mauvais
+            démarrage d’impression ou un décollement de la première couche.
+          </div>
+
+          <div class="mini-item">
+            <strong>Buse bouchée :</strong> obstruction empêchant le filament de sortir
+            correctement pendant l’impression.
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <h2>Risque pour la production</h2>
+        <p>
+          Une imprimante en panne entraîne une perte de temps : la pièce doit être relancée,
+          la machine reste indisponible et les projets qui dépendent des pièces imprimées
+          peuvent prendre du retard.
+        </p>
+
+        <div class="warning-box">
+          <strong>Point important :</strong><br>
+          la maintenance devait être réalisée avec méthode afin de réparer l’imprimante
+          sans abîmer la tête d’impression, la buse ou le système d’extrusion.
+        </div>
+      </article>
+
+      <article class="card">
+        <h2>Démarche de maintenance</h2>
+        <p>
+          Pour intervenir correctement, j’ai suivi une méthode progressive permettant
+          d’identifier le problème, de démonter uniquement les éléments nécessaires et de
+          vérifier le bon fonctionnement après réparation.
+        </p>
+
+        <ul>
+          <li>Observer le défaut ou l’échec d’impression.</li>
+          <li>Identifier le type de panne rencontré.</li>
+          <li>Démonter les éléments nécessaires de la tête d’impression.</li>
+          <li>Chauffer la buse à la température adaptée au PLA.</li>
+          <li>Retirer le plastique bloqué ou accumulé.</li>
+          <li>Nettoyer la buse et vérifier le passage du filament.</li>
+          <li>Remonter les éléments puis relancer un essai.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>Procédure appliquée</h2>
+        <p>
+          En cas de blob, je devais démonter le cache de la tête d’impression, chauffer la buse
+          puis retirer progressivement les morceaux de plastique. Une fois les plus gros morceaux
+          retirés, je nettoyais les résidus restants afin d’éviter une nouvelle obstruction.
+        </p>
+
+        <p>
+          En cas de buse bouchée, je retirais le tube de guidage du filament, vérifiais si le
+          filament était coincé dans l’extrudeur, puis chauffais la buse afin de déboucher le passage
+          du plastique.
+        </p>
+      </article>
+
+      <article class="card full">
+        <h2>Résultat obtenu</h2>
+        <p>
+          Cette démarche m’a permis de remettre plusieurs imprimantes en fonctionnement
+          et de maintenir la production de pièces imprimées en 3D. Elle m’a également permis
+          de mieux comprendre l’intérêt d’une procédure claire, répétable et adaptée au matériel.
+        </p>
+
+        <div class="tags">
+          <span class="tag">Diagnostic de panne</span>
+          <span class="tag">Maintenance corrective</span>
+          <span class="tag">Impression 3D</span>
+          <span class="tag">Remise en service</span>
+          <span class="tag">Procédure technique</span>
+        </div>
+      </article>
+
+      <article class="card full">
+        <h2>Preuves et illustrations</h2>
+        <p>
+          Pour illustrer cette compétence, je peux m’appuyer sur les extraits du rapport de stage
+          décrivant les pannes rencontrées, ainsi que sur les photos de la tête d’impression et
+          de l’extrudeur présentes en annexe.
+        </p>
+
+        <div class="proof-grid">
+          <article class="card image-card">
+            <figure>
+              <img src="../../documents/tete-impression-cr10.png" alt="Tête d'impression d'une imprimante 3D CR-10">
+              <figcaption>
+                <strong>Tête d’impression :</strong> élément concerné par les opérations de maintenance,
+                notamment lors d’un blob ou d’une obstruction de la buse.
+              </figcaption>
+            </figure>
+          </article>
+
+          <article class="card image-card">
+            <figure>
+              <img src="../../documents/extrudeur-imprimante-3d.png" alt="Extrudeur d'une imprimante 3D">
+              <figcaption>
+                <strong>Extrudeur :</strong> partie à vérifier lorsque le filament est coincé ou ne sort
+                plus correctement pendant l’impression.
+              </figcaption>
+            </figure>
+          </article>
+        </div>
+      </article>
+
+      <article class="card full">
+        <h2>Exemple de procédure simplifiée</h2>
+        <div class="warning-box">
+          <strong>Cas d’une buse bouchée :</strong>
+          <ul>
+            <li>Arrêter l’impression et sécuriser la machine.</li>
+            <li>Démonter le tube de guidage du filament.</li>
+            <li>Chauffer la buse à la température adaptée au PLA.</li>
+            <li>Forcer légèrement le filament pour libérer le passage.</li>
+            <li>Retirer le filament abîmé puis couper son extrémité.</li>
+            <li>Réinsérer le filament proprement dans l’extrudeur.</li>
+            <li>Vérifier que le plastique sort correctement de la buse.</li>
+            <li>Remonter les éléments démontés et relancer un test.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="card full bilan">
+        <h2>Bilan personnel</h2>
+        <p>
+          Cette mission m’a permis de développer mes compétences en maintenance industrielle.
+          J’ai appris à identifier une panne, intervenir de manière méthodique et remettre un
+          système en état de fonctionnement.
+        </p>
+
+        <p>
+          Elle illustre directement la compétence <strong>Produire une procédure de maintenance</strong>,
+          car les interventions réalisées reposaient sur une suite d’étapes précises permettant
+          de traiter les problèmes les plus fréquents sur les imprimantes 3D.
+        </p>
+      </article>
+    </section>
+
+    <p class="footer-note">
+      ATEC Électronique – Stage BUT GEII / Parcours ESE
+    </p>
+  </main>
+</body>
+</html>

@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>C1.3 - Rédiger un dossier de conception</title>
+
+  <style>
+    :root {
+      --primary: #163a5f;
+      --secondary: #1f5f8b;
+
+      /* C1 = rouge */
+      --accent: #e75b5b;
+      --accent-soft: #fff0f0;
+
+      --blue-soft: #eef6ff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --bg: #f5f8fc;
+      --white: #ffffff;
+      --shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    .page {
+      max-width: 1150px;
+      margin: 40px auto;
+      padding: 0 20px 60px;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 20px;
+      text-decoration: none;
+      color: var(--secondary);
+      font-weight: bold;
+      transition: 0.2s;
+    }
+
+    .back-link:hover {
+      opacity: 0.8;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 38px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -70px;
+      top: -70px;
+      width: 210px;
+      height: 210px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 50%;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 8px 15px;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      margin-bottom: 14px;
+    }
+
+    .hero h1 {
+      margin: 0 0 12px;
+      font-size: 2rem;
+      line-height: 1.25;
+    }
+
+    .hero p {
+      margin: 0;
+      font-size: 1.05rem;
+      max-width: 850px;
+      opacity: 0.96;
+    }
+
+    .intro-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 0.8fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .card h2 {
+      margin-top: 0;
+      color: var(--primary);
+      font-size: 1.3rem;
+      border-left: 5px solid var(--accent);
+      padding-left: 12px;
+    }
+
+    .card h3 {
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+
+    .full {
+      grid-column: 1 / -1;
+    }
+
+    .highlight-box {
+      background: var(--accent-soft);
+      border-left: 5px solid var(--accent);
+      padding: 16px 18px;
+      border-radius: 12px;
+      margin-top: 12px;
+    }
+
+
+    ul {
+      padding-left: 20px;
+      margin-bottom: 0;
+    }
+
+    .mini-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 15px;
+    }
+
+    .mini-item {
+      background: #f8fbff;
+      border: 1px solid #dbe9f8;
+      border-radius: 14px;
+      padding: 14px 16px;
+    }
+
+    .mini-item strong {
+      color: var(--primary);
+    }
+
+    .proof-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 16px;
+    }
+
+    .download-card {
+      background: linear-gradient(135deg, #ffffff, #f7fbff);
+      border: 1px solid #dbe9f8;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .pdf-preview {
+      background: #eef3f8;
+      border: 1px dashed #b6c7d8;
+      border-radius: 14px;
+      padding: 18px;
+      margin: 14px 0;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .pdf-preview img {
+      width: 100%;
+      max-height: 280px;
+      object-fit: contain;
+      border-radius: 12px;
+      background: white;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    }
+
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      background: var(--primary);
+      color: white;
+      padding: 12px 18px;
+      border-radius: 12px;
+      font-weight: bold;
+      transition: 0.2s;
+      text-align: center;
+    }
+
+    .btn:hover {
+      background: var(--secondary);
+      transform: translateY(-1px);
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .tag {
+      background: var(--accent-soft);
+      color: #a93737;
+      border: 1px solid #ffd0d0;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+
+    .image-card {
+      padding: 0;
+      overflow: hidden;
+    }
+
+    figure {
+      margin: 0;
+      background: white;
+    }
+
+    figure img {
+      display: block;
+      width: 100%;
+      min-height: 260px;
+      object-fit: contain;
+      background: #dfe8f1;
+    }
+
+    figcaption {
+      padding: 14px 16px;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .bilan {
+      background: linear-gradient(135deg, #fff, #fff7f7);
+      border: 1px solid #ffdcdc;
+    }
+
+    .footer-note {
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 900px) {
+      .intro-grid,
+      .grid,
+      .proof-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        font-size: 1.55rem;
+      }
+
+      .hero {
+        padding: 28px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <a href="../competence.html" class="back-link">← Retour aux compétences</a>
+
+    <section class="hero">
+      <div class="badge">Compétence C1.3</div>
+      <h1>Rédiger un dossier de conception</h1>
+      <p>
+        Dans le cadre du projet de station météo connectée, j’ai rédigé et structuré
+        la partie concernant la carte centrale. Cette partie présente les choix techniques,
+        l’architecture électronique, les schémas, le routage et l’organisation logicielle
+        du système.
+      </p>
+    </section>
+
+    <section class="intro-grid">
+      <article class="card">
+        <h2>Contexte du projet</h2>
+        <p>
+          Le projet consiste à concevoir une station météo connectée modulaire composée
+          de plusieurs cartes : une carte toit, une carte jardin, une carte intérieure,
+          une carte de communication et une carte centrale.
+        </p>
+
+        <p>
+          La carte centrale est l’élément principal du point de vue utilisateur. Elle reçoit
+          les données envoyées par les différents modules, les affiche sur une interface tactile
+          et permet leur sauvegarde afin de conserver un historique exploitable.
+        </p>
+
+        <div class="highlight-box">
+          <strong>Ma contribution principale :</strong><br>
+          rédiger la partie du dossier de conception liée à la carte centrale, en expliquant
+          les choix matériels, les contraintes techniques, le fonctionnement prévu et les
+          solutions retenues.
+        </div>
+      </article>
+
+      <article class="card download-card">
+        <div>
+          <h2>Document associé</h2>
+          <p>
+            Le dossier de conception complet présente l’ensemble du projet station météo.
+            La partie carte centrale détaille l’architecture matérielle et logicielle dont
+            j’ai eu la charge.
+          </p>
+
+          <div class="pdf-preview">
+            <img src="../../documents/conception-meteo-couverture.png" alt="Aperçu du dossier de conception station météo">
+            <p>Aperçu de la page de garde du dossier de conception</p>
+          </div>
+        </div>
+
+        <a class="btn" href="../../documents/Conception-meteo.pdf" target="_blank">
+          Ouvrir le dossier de conception
+        </a>
+      </article>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <h2>Rôle de la carte centrale</h2>
+        <p>
+          La carte centrale a pour objectif de coordonner les échanges entre les différents
+          modules de mesure et de centraliser les informations reçues. Elle doit rendre
+          les données directement accessibles à l’utilisateur.
+        </p>
+
+        <div class="mini-list">
+          <div class="mini-item">
+            <strong>Réception des données :</strong> récupération des mesures envoyées
+            par les cartes Toit, Jardin et Intérieur.
+          </div>
+
+          <div class="mini-item">
+            <strong>Affichage :</strong> présentation claire des valeurs sur un écran tactile.
+          </div>
+
+          <div class="mini-item">
+            <strong>Sauvegarde :</strong> enregistrement des mesures pour conserver
+            un historique.
+          </div>
+
+          <div class="mini-item">
+            <strong>Exploitation externe :</strong> données stockées dans un format simple,
+            comme le CSV, afin d’être lues sur ordinateur.
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <h2>Choix d’architecture</h2>
+        <p>
+          Pour la carte centrale, j’ai choisi une architecture basée sur un
+          <strong>ESP32-S3-WROOM-1</strong> associé à un écran SPI tactile de 4 pouces.
+          Ce choix permet d’obtenir une interface plus lisible qu’avec un module compact
+          de type M5Stack, tout en conservant les avantages de la famille ESP32.
+        </p>
+
+        <div class="highlight-box">
+          <strong>Objectif de conception :</strong><br>
+          proposer une carte centrale capable de gérer l’IHM, la communication,
+          le stockage des données et les futures évolutions du projet.
+        </div>
+      </article>
+
+      <article class="card">
+        <h2>Conception électronique</h2>
+        <p>
+          Dans le dossier de conception, j’ai détaillé les différents blocs électroniques
+          nécessaires au fonctionnement de la carte centrale. Chaque choix est expliqué
+          en fonction du besoin technique et des contraintes du projet.
+        </p>
+
+        <ul>
+          <li>arrivée d’alimentation en +10 V, GND et -10 V ;</li>
+          <li>régulation 5 V avec un L7805 ;</li>
+          <li>régulation 3,3 V avec un AP63203 ;</li>
+          <li>adaptation des niveaux logiques avec un TXS0102DCT ;</li>
+          <li>intégration de l’ESP32-S3 ;</li>
+          <li>connexion de l’écran tactile SPI ;</li>
+          <li>gestion des mémoires microSD ;</li>
+          <li>connecteur UART pour la programmation.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>Contraintes prises en compte</h2>
+        <p>
+          La rédaction du dossier devait expliquer les contraintes rencontrées pendant
+          la conception, notamment les différences de niveaux logiques entre les éléments,
+          le partage du bus SPI entre plusieurs périphériques et le besoin d’une alimentation
+          stable pour l’ESP32-S3.
+        </p>
+
+        <div class="highlight-box">
+          Les choix retenus ont été justifiés afin que le dossier soit compréhensible,
+          exploitable et cohérent avec le cahier des charges du projet.
+        </div>
+      </article>
+
+      <article class="card full">
+        <h2>Partie logicielle</h2>
+        <p>
+          Le dossier présente également l’organisation logicielle de la carte centrale.
+          Le programme est structuré pour gérer l’affichage, l’interaction tactile,
+          la réception des données et leur sauvegarde sur carte SD.
+        </p>
+
+        <p>
+          L’interface homme-machine a été pensée sous forme de maquette afin de définir
+          les différentes pages : accueil, intérieur, jardin, toit et carte SD. Chaque page
+          reprend une organisation similaire pour faciliter l’utilisation par l’utilisateur.
+        </p>
+
+        <div class="tags">
+          <span class="tag">Dossier de conception</span>
+          <span class="tag">Carte centrale</span>
+          <span class="tag">ESP32-S3</span>
+          <span class="tag">Écran tactile</span>
+          <span class="tag">KiCad</span>
+          <span class="tag">MicroSD</span>
+          <span class="tag">IHM</span>
+        </div>
+      </article>
+
+      <article class="card full">
+        <h2>Preuves et illustrations</h2>
+        <p>
+          Pour illustrer cette compétence, plusieurs éléments du dossier peuvent être
+          utilisés : le synoptique de l’architecture générale, le synoptique de la carte centrale,
+          les schémas électroniques et le routage réalisé sous KiCad.
+        </p>
+
+        <div class="proof-grid">
+          <article class="card image-card">
+            <figure>
+              <img src="../../documents/synoptique-architecture-systeme.png" alt="Synoptique de l'architecture générale du système">
+              <figcaption>
+                <strong>Synoptique de l’architecture générale :</strong> représentation des échanges
+                entre les cartes de mesure, la carte de communication, la carte centrale,
+                l’écran tactile, la carte microSD et l’utilisateur.
+              </figcaption>
+            </figure>
+          </article>
+
+          <article class="card image-card">
+            <figure>
+              <img src="../../documents/synoptique-carte-centrale-conception.png" alt="Synoptique de la carte centrale">
+              <figcaption>
+                <strong>Synoptique de la carte centrale :</strong> présentation des blocs principaux
+                de la carte, des alimentations, de l’ESP32-S3, de l’écran, de la mémoire
+                et des communications.
+              </figcaption>
+            </figure>
+          </article>
+
+          <article class="card image-card">
+            <figure>
+              <img src="../../documents/schema-esp32-carte-centrale.png" alt="Schéma électronique de l'ESP32-S3 sur la carte centrale">
+              <figcaption>
+                <strong>Schéma ESP32-S3 :</strong> extrait du dossier montrant l’intégration
+                du microcontrôleur principal et des boutons nécessaires à la programmation.
+              </figcaption>
+            </figure>
+          </article>
+
+          <article class="card image-card">
+            <figure>
+              <img src="../../documents/routage-carte-centrale-kicad.png" alt="Routage KiCad de la carte centrale">
+              <figcaption>
+                <strong>Routage KiCad :</strong> preuve de la conception PCB de la carte centrale,
+                avec le placement des composants et le routage des signaux.
+              </figcaption>
+            </figure>
+          </article>
+        </div>
+      </article>
+
+      <article class="card full">
+        <h2>Ce que montre le dossier</h2>
+        <p>
+          La partie carte centrale du dossier ne se limite pas à une simple description.
+          Elle explique le rôle du système, les fonctions attendues, les choix de composants,
+          les raisons techniques de ces choix et la manière dont les différentes parties
+          communiquent entre elles.
+        </p>
+
+        <div class="highlight-box">
+          Cette rédaction permet de montrer que la conception est structurée, détaillée
+          et cohérente avec le cahier des charges : chaque bloc de la carte centrale possède
+          une fonction claire et une justification technique.
+        </div>
+      </article>
+
+      <article class="card full bilan">
+        <h2>Bilan personnel</h2>
+        <p>
+          Cette compétence m’a permis d’apprendre à formaliser un travail de conception
+          technique dans un document structuré. J’ai dû expliquer mes choix, présenter
+          les schémas, organiser les informations et rendre le dossier compréhensible
+          pour une personne extérieure au projet.
+        </p>
+
+        <p>
+          La rédaction de la partie carte centrale illustre donc directement la compétence
+          <strong>C1.3 – Rédiger un dossier de conception</strong>, car elle regroupe les éléments
+          nécessaires pour comprendre la conception matérielle et logicielle d’un sous-système
+          complet de la station météo.
+        </p>
+      </article>
+    </section>
+
+    <p class="footer-note">
+      Projet station météo – BUT GEII / Parcours ESE – Carte centrale
+    </p>
+  </main>
+</body>
+</html>
